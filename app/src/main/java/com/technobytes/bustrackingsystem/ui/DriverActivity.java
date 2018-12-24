@@ -59,7 +59,8 @@ public class DriverActivity extends AppCompatActivity {
 
                 if (driver.getBusNo().equals(firebaseDriver.getBusNo()) && driver.getPassword().equals
                         (firebaseDriver.getPassword())) {
-                    Toast.makeText(DriverActivity.this, "found record", Toast.LENGTH_LONG).show();
+                    Toast.makeText(DriverActivity.this, "Driver Logged In...", Toast.LENGTH_LONG)
+                            .show();
                     Intent intent = new Intent(DriverActivity.this, DriverInfoActivity.class);
                     startActivity(intent);
                 } else {
