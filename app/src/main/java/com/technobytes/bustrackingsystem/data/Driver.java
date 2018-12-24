@@ -4,28 +4,37 @@ package com.technobytes.bustrackingsystem.data;
  * Created by Sara on 12/23/2018.
  */
 public class Driver {
-    String BusNo, Password;
+    String busNo, password;
+
+    public Driver() {
+    }
 
     public Driver(String BusNo, String Password) {
-        this.BusNo = BusNo;
-        this.Password = Password;
+        this.busNo = BusNo;
+        this.password = Password;
     }
-    public void setBusNo(String BusNo)
-    {
-        this.BusNo=BusNo;
+
+    public void setBusNo(String BusNo) {
+        this.busNo = BusNo;
     }
 
     public String getBusNo() {
-        return BusNo;
+        return busNo;
     }
 
-    public void setPassword(String Password)
-    {
-        this.Password=Password;
+    public void setPassword(String Password) {
+        this.password = Password;
     }
 
-    public String getPassword()
-    {
-        return Password;
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String toString() {
+        return "Driver{" +
+                "busNo='" + busNo + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

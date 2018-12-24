@@ -18,7 +18,8 @@
         </activity>
         <activity android:name=".ui.HomeActivity" />
         <activity android:name=".ui.DriverActivity" />
-        <activity android:name=".ui.UserActivity"></activity>
+        <activity android:name=".ui.UserActivity" />
+        <activity android:name=".ui.DriverInfoActivity"></activity>
     </application>
 
 </manifest>
