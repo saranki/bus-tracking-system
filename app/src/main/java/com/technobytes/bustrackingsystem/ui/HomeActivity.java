@@ -1,8 +1,8 @@
 package com.technobytes.bustrackingsystem.ui;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -23,7 +23,7 @@ public class HomeActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"Welcome to Login Driver!",Toast.LENGTH_SHORT)
+                Toast.makeText(getApplicationContext(), "Welcome to Login Driver!", Toast.LENGTH_SHORT)
                         .show();
                 Intent intent = new Intent(HomeActivity.this, DriverActivity.class);
                 startActivity(intent);
@@ -35,7 +35,7 @@ public class HomeActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"Welcome to get time schedule!",Toast.LENGTH_SHORT)
+                Toast.makeText(getApplicationContext(), "Welcome to get time schedule!", Toast.LENGTH_SHORT)
                         .show();
                 Intent intent = new Intent(HomeActivity.this, UserActivity.class);
                 startActivity(intent);

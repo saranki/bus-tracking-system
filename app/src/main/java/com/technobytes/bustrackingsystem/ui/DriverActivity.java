@@ -1,8 +1,9 @@
 package com.technobytes.bustrackingsystem.ui;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,10 +21,10 @@ import com.technobytes.bustrackingsystem.data.Driver;
 
 public class DriverActivity extends AppCompatActivity {
 
-    FirebaseDatabase database;
+    private static final String TAG = "DriverActivity";
     DatabaseReference driversReference;
 
-    EditText edtBusNo,edtPassword;
+    EditText edtBusNo, edtPassword;
     Button btnLogin;
 
     @Override
@@ -32,114 +33,48 @@ public class DriverActivity extends AppCompatActivity {
         setContentView(R.layout.activity_driver);
 
         FirebaseApp.initializeApp(this);
-        database = FirebaseDatabase.getInstance();
-        driversReference = database.getReference("drivers");
+        driversReference = FirebaseDatabase.getInstance().getReference();
 
-        edtBusNo=findViewById(R.id.edtBusNo);
-        edtPassword=findViewById(R.id.edtPassword);
-        btnLogin=(Button)findViewById(R.id.btnLogin);
+        edtBusNo = findViewById(R.id.edtBusNo);
+        edtPassword = findViewById(R.id.edtPassword);
+        btnLogin = findViewById(R.id.btnLogin);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(DriverActivity.this,"Check DB "+driversReference.getParent().child(edtBusNo.getText().toString()),Toast.LENGTH_SHORT).show();
-                login(edtBusNo.getText().toString(),edtPassword.getText().toString());
-//                driverAuthenticate(edtBusNo.toString(),edtPassword.toString());
-
-            }
-        });
-
-
-    }
-
-    // Login method body
-    private void driverAuthenticate(final String busNo, final String password){
-        Toast.makeText(DriverActivity.this,"username"+busNo+" password "+password,Toast.LENGTH_SHORT).show();
-        driversReference.child(busNo).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Toast.makeText(DriverActivity.this,"Data change",Toast.LENGTH_SHORT).show();
-                if(dataSnapshot.child(busNo).exists()){
-                    Toast.makeText(DriverActivity.this,"Exists",Toast.LENGTH_SHORT).show();
-                    if((!busNo.isEmpty())&&(!password.isEmpty())){
-                        Toast.makeText(DriverActivity.this,"Pass and No",Toast.LENGTH_SHORT).show();
-                        Toast.makeText(DriverActivity.this,password+ " "+busNo+" "+"from auth",Toast.LENGTH_SHORT).show();
-                        Driver driverCredentials = dataSnapshot.child(busNo).getValue(Driver.class);
-                        if(driverCredentials.getPassword().equals(password)){
-                            Toast.makeText(DriverActivity.this,"Credentials"+driverCredentials.getPassword().toString(),Toast.LENGTH_SHORT).show();
-                            Toast.makeText(DriverActivity.this,"Successfully logged in",Toast.LENGTH_SHORT).show();
-                            Log.d("Message",busNo+" "+password);
-                        }
-                    }
-                    else{
-                        Toast.makeText(DriverActivity.this,"Password is wrong",Toast.LENGTH_SHORT).show();
-                    }
-                }
-                else{
-                    Toast.makeText(DriverActivity.this,"Bus No is not Registered",Toast.LENGTH_SHORT).show();
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                loginDriver(edtBusNo.getText().toString(), edtPassword.getText().toString());
             }
         });
     }
 
-    private void login(final String busNo, final String password){
-        Toast.makeText(DriverActivity.this,"Entered",Toast.LENGTH_SHORT).show();
-        Toast.makeText(DriverActivity.this,"username "+busNo+", password "+password,Toast.LENGTH_SHORT).show();
-
-        driversReference.child("drivers").child(busNo).addValueEventListener(new ValueEventListener() {
+    private void loginDriver(final String busNo, final String password) {
+        ValueEventListener driverInfoListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot driverSnapshot : dataSnapshot.getChildren()){
-                    Driver driver = dataSnapshot.getValue(Driver.class);
-                    Toast.makeText(DriverActivity.this,"Driver no "+driver.getBusNo().toString(),Toast.LENGTH_SHORT).show();
-                    if((driver.getBusNo().equals(busNo))&&(driver.getPassword().equals(password))){
-                        Toast.makeText(DriverActivity.this,"Logged in",Toast.LENGTH_SHORT).show();
-                    }
-                    else
-                    {
-                        Toast.makeText(DriverActivity.this,"Failed",Toast.LENGTH_SHORT).show();
-                    }
+                Driver driver = new Driver(busNo, password);
+                Driver firebaseDriver = dataSnapshot.getValue(Driver.class);
+
+                Log.i(TAG, "Passed Driver Object -> " + driver.toString());
+                Log.i(TAG, "Firebase Driver Object -> " + firebaseDriver.toString());
+
+                if (driver.getBusNo().equals(firebaseDriver.getBusNo()) && driver.getPassword().equals
+                        (firebaseDriver.getPassword())) {
+                    Toast.makeText(DriverActivity.this, "found record", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(DriverActivity.this, DriverInfoActivity.class);
+                    startActivity(intent);
+                } else {
+                    Log.i(TAG, "Authentication Failed...");
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(DriverActivity.this,"Failed: "+databaseError.getMessage().toString(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(DriverActivity.this, databaseError.getMessage(), Toast.LENGTH_LONG).show();
+                Log.i(TAG, "Bus Details Not Found...");
 
             }
-        });
-//        ValueEventListener driverListener = new ValueEventListener() {
-//
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                for(DataSnapshot driverSnapshot : dataSnapshot.getChildren()){
-//                    Toast.makeText(DriverActivity.this,"Collection count = "+dataSnapshot.getChildrenCount(),Toast.LENGTH_SHORT).show();
-//
-//                    Driver driver = dataSnapshot.getValue(Driver.class);
-//                    Toast.makeText(DriverActivity.this,"Driver no "+driver.getBusNo().toString(),Toast.LENGTH_SHORT).show();
-//                    if((driver.getBusNo().equals(busNo))&&(driver.getPassword().equals(password))){
-//                        Toast.makeText(DriverActivity.this,"Logged in",Toast.LENGTH_SHORT).show();
-//                    }
-//                    else
-//                    {
-//                        Toast.makeText(DriverActivity.this,"Failed",Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        };
-//        driversReference.addValueEventListener(driverListener);
+        };
 
+        driversReference.child("drivers").child(busNo).addValueEventListener(driverInfoListener);
     }
 }
