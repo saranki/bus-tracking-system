@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "138235184167",
+    "firebase_url": "https://bussystem-df189.firebaseio.com",
+    "project_id": "bussystem-df189",
+    "storage_bucket": "bussystem-df189.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:138235184167:android:033e4aa619a047ba",
+        "android_client_info": {
+          "package_name": "com.technobytes.bustrackingsystem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "138235184167-jtdi6gmv9v018vac2n5hvmec78cmlr2p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGNOysI5SHFh5spgT2kkuJu4frF89-f4E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
