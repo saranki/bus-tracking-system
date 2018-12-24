@@ -21,7 +21,7 @@ import com.technobytes.bustrackingsystem.data.Driver;
 public class DriverActivity extends AppCompatActivity {
 
     FirebaseDatabase database;
-    DatabaseReference drivers;
+    DatabaseReference driversReference;
 
     EditText edtBusNo,edtPassword;
     Button btnLogin;
@@ -33,7 +33,7 @@ public class DriverActivity extends AppCompatActivity {
 
         FirebaseApp.initializeApp(this);
         database = FirebaseDatabase.getInstance();
-        drivers = database.getReference("drivers");
+        driversReference = database.getReference("drivers");
 
         edtBusNo=findViewById(R.id.edtBusNo);
         edtPassword=findViewById(R.id.edtPassword);
@@ -42,7 +42,10 @@ public class DriverActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                login(edtBusNo.toString(),edtPassword.toString());
+                Toast.makeText(DriverActivity.this,"Check DB "+driversReference.getParent().child(edtBusNo.getText().toString()),Toast.LENGTH_SHORT).show();
+                login(edtBusNo.getText().toString(),edtPassword.getText().toString());
+//                driverAuthenticate(edtBusNo.toString(),edtPassword.toString());
+
             }
         });
 
@@ -51,8 +54,8 @@ public class DriverActivity extends AppCompatActivity {
 
     // Login method body
     private void driverAuthenticate(final String busNo, final String password){
-        Toast.makeText(DriverActivity.this,"Entered",Toast.LENGTH_SHORT).show();
-        drivers.addValueEventListener(new ValueEventListener() {
+        Toast.makeText(DriverActivity.this,"username"+busNo+" password "+password,Toast.LENGTH_SHORT).show();
+        driversReference.child(busNo).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Toast.makeText(DriverActivity.this,"Data change",Toast.LENGTH_SHORT).show();
@@ -87,28 +90,56 @@ public class DriverActivity extends AppCompatActivity {
 
     private void login(final String busNo, final String password){
         Toast.makeText(DriverActivity.this,"Entered",Toast.LENGTH_SHORT).show();
+        Toast.makeText(DriverActivity.this,"username "+busNo+", password "+password,Toast.LENGTH_SHORT).show();
 
-        ValueEventListener driverListener = new ValueEventListener() {
-
+        driversReference.child("drivers").child(busNo).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Toast.makeText(DriverActivity.this,"2nd Entered",Toast.LENGTH_SHORT).show();
-
-                Driver driver = dataSnapshot.getValue(Driver.class);
-                if((driver.getBusNo().equals(busNo))&&(driver.getPassword().equals(password))){
-                    Toast.makeText(DriverActivity.this,"Logged in",Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                    Toast.makeText(DriverActivity.this,"Failed",Toast.LENGTH_SHORT).show();
+                for(DataSnapshot driverSnapshot : dataSnapshot.getChildren()){
+                    Driver driver = dataSnapshot.getValue(Driver.class);
+                    Toast.makeText(DriverActivity.this,"Driver no "+driver.getBusNo().toString(),Toast.LENGTH_SHORT).show();
+                    if((driver.getBusNo().equals(busNo))&&(driver.getPassword().equals(password))){
+                        Toast.makeText(DriverActivity.this,"Logged in",Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+                        Toast.makeText(DriverActivity.this,"Failed",Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(DriverActivity.this,"Failed: "+databaseError.getMessage().toString(),Toast.LENGTH_SHORT).show();
 
             }
-        };
-        drivers.addValueEventListener(driverListener);
+        });
+//        ValueEventListener driverListener = new ValueEventListener() {
+//
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                for(DataSnapshot driverSnapshot : dataSnapshot.getChildren()){
+//                    Toast.makeText(DriverActivity.this,"Collection count = "+dataSnapshot.getChildrenCount(),Toast.LENGTH_SHORT).show();
+//
+//                    Driver driver = dataSnapshot.getValue(Driver.class);
+//                    Toast.makeText(DriverActivity.this,"Driver no "+driver.getBusNo().toString(),Toast.LENGTH_SHORT).show();
+//                    if((driver.getBusNo().equals(busNo))&&(driver.getPassword().equals(password))){
+//                        Toast.makeText(DriverActivity.this,"Logged in",Toast.LENGTH_SHORT).show();
+//                    }
+//                    else
+//                    {
+//                        Toast.makeText(DriverActivity.this,"Failed",Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        };
+//        driversReference.addValueEventListener(driverListener);
+
     }
 }
