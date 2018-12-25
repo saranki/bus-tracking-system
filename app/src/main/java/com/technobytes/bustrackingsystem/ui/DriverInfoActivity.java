@@ -18,10 +18,13 @@ import com.technobytes.bustrackingsystem.service.TrackerService;
 public class DriverInfoActivity extends AppCompatActivity {
 
     private static final int PERMISSIONS_REQUEST = 1;
+    private String busNo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        busNo = getIntent().getExtras().getString("bus_no","bus_no_here_at_one");
 
         // Check GPS is enabled
         LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -35,7 +38,7 @@ public class DriverInfoActivity extends AppCompatActivity {
         int permission = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION);
         if (permission == PackageManager.PERMISSION_GRANTED) {
-            startTrackerService();
+            startTrackerService(busNo);
         } else {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
@@ -43,8 +46,10 @@ public class DriverInfoActivity extends AppCompatActivity {
         }
     }
 
-    private void startTrackerService() {
-        startService(new Intent(this, TrackerService.class));
+    private void startTrackerService(String busNo) {
+        Intent intent = new Intent(this, TrackerService.class);
+        intent.putExtra("bus_no", busNo);
+        startService(intent);
         finish();
     }
 
@@ -54,7 +59,7 @@ public class DriverInfoActivity extends AppCompatActivity {
         if (requestCode == PERMISSIONS_REQUEST && grantResults.length == 1
                 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             // Start the service when the permission is granted
-            startTrackerService();
+            startTrackerService(busNo);
         } else {
             finish();
         }

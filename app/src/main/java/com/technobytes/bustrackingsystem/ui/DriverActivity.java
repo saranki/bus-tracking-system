@@ -62,6 +62,7 @@ public class DriverActivity extends AppCompatActivity {
                     Toast.makeText(DriverActivity.this, "Driver Logged In...", Toast.LENGTH_LONG)
                             .show();
                     Intent intent = new Intent(DriverActivity.this, DriverInfoActivity.class);
+                    intent.putExtra("bus_no", busNo);
                     startActivity(intent);
                 } else {
                     Log.i(TAG, "Authentication Failed...");

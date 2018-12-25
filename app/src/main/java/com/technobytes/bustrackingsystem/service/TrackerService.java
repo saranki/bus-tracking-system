@@ -29,6 +29,7 @@ import com.technobytes.bustrackingsystem.R;
 
 public class TrackerService extends Service {
     private static final String TAG = TrackerService.class.getSimpleName();
+    private String busNo;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -38,9 +39,21 @@ public class TrackerService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+//        buildNotification();
+////        loginToFirebase();
+//        requestLocationUpdates();
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        //return super.onStartCommand(intent, flags, startId);
+        busNo = intent.getExtras().getString("bus_no", "bus_no_here_at_two");
+
+
         buildNotification();
-//        loginToFirebase();
+
         requestLocationUpdates();
+        return START_STICKY;
     }
 
     private void buildNotification() {
@@ -92,7 +105,8 @@ public class TrackerService extends Service {
         request.setFastestInterval(5000);
         request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         FusedLocationProviderClient client = LocationServices.getFusedLocationProviderClient(this);
-        final String path = getString(R.string.firebase_path) + "/" + getString(R.string.transport_id);
+//        final String path = getString(R.string.firebase_path) + "/" + getString(R.string.transport_id);
+        final String path =  getString(R.string.firebase_path) + "/" + busNo;
         int permission = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION);
         if (permission == PackageManager.PERMISSION_GRANTED) {
