@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.SchedulerActivity">
+
+    <TextView
+        android:id="@+id/currentLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Current Location : "
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/txtCurrentLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" "
+        android:textSize="24sp"
+        android:layout_toRightOf="@+id/currentLocation"
+        android:layout_toEndOf="@+id/currentLocation"/>
+
+    <TextView
+        android:id="@+id/destination"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Destination : "
+        android:textSize="24sp"
+        android:layout_below="@+id/currentLocation"/>
+
+    <TextView
+        android:id="@+id/txtDestination"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" "
+        android:textSize="24sp"
+        android:layout_toRightOf="@+id/destination"
+        android:layout_toEndOf="@+id/destination"
+        android:layout_below="@id/txtCurrentLocation"/>
+
+    <TextView
+        android:id="@+id/busNo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bus No : "
+        android:textSize="24sp"
+        android:layout_below="@+id/destination"/>
+
+    <TextView
+        android:id="@+id/txtBusNo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" "
+        android:textSize="24sp"
+        android:layout_toRightOf="@+id/busNo"
+        android:layout_toEndOf="@id/busNo"
+        android:layout_below="@id/txtDestination"/>
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bus Schedule Time : "
+        android:textSize="24sp"
+        android:layout_below="@+id/busNo"/>
+
+    <TextView
+        android:id="@+id/txtTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" "
+        android:textSize="24sp"
+        android:layout_toRightOf="@id/time"
+        android:layout_toEndOf="@+id/time"
+        android:layout_below="@id/txtBusNo"/>
+    <LinearLayout
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Check bus location in map view"
+            android:layout_gravity="center_horizontal"/>
+    </LinearLayout>
+
+
+</RelativeLayout>
