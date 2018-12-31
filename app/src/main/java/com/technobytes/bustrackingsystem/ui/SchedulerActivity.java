@@ -75,7 +75,7 @@ public class SchedulerActivity extends AppCompatActivity implements LocationList
         destination.setText(retDestination);
         Log.d(TAG, "Destination: " + retDestination);
 
-        checkBusSchedule("Vavuniya", retDestination);
+        checkBusSchedule(curLocation, retDestination);
         map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -147,19 +147,18 @@ public class SchedulerActivity extends AppCompatActivity implements LocationList
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot scheduler : dataSnapshot.getChildren()) {
                     routeName = scheduler.child("route").getValue().toString();
-                    busNumber = scheduler.getKey();
+                    busNumber = scheduler.child("busNo").getValue().toString();
                     time = scheduler.child("startTime").getValue().toString();
 
-                    if(((routeName.split("-")[0].equals(endPoint)) || (routeName.split("-")[0].equals(startPoint)))
-                            &&((routeName.split("-")[1].equals(endPoint)) || (routeName.split("-")[1].equals(startPoint)))){
+                    if (((routeName.split("-")[0].equals(endPoint)) || (routeName.split("-")[0].equals(startPoint)))
+                            && ((routeName.split("-")[1].equals(endPoint)) || (routeName.split("-")[1].equals(startPoint)))) {
                         busNo.setText(busNumber);
                         startTime.setText(time);
                     }
-                    Log.d(TAG,"First----------> " + routeName.split("-")[0]);
-                    Log.d(TAG,"Second----------> " + routeName.split("-")[1]);
-                    Log.d(TAG, "Firebase---------> " + scheduler.child("route").getValue());
-                    Log.d(TAG, "Firebase---------> " + busNumber);
-
+                    Log.d(TAG, "First----------> " + routeName.split("-")[0]);
+                    Log.d(TAG, "Second----------> " + routeName.split("-")[1]);
+                    Log.d(TAG, "Firebase route---------> " + scheduler.child("route").getValue());
+                    Log.d(TAG, "Firebase bus no---------> " + busNumber);
                 }
             }
 
@@ -168,7 +167,6 @@ public class SchedulerActivity extends AppCompatActivity implements LocationList
                 Log.d(TAG, "Error message: " + databaseError);
             }
         };
-
-        schedulerReference.child("locations").addValueEventListener(valueEventListener);
+        schedulerReference.child("drivers").addValueEventListener(valueEventListener);
     }
 }

@@ -113,6 +113,4 @@
             android:textSize="18sp"
             android:text="SHOW IN MAP" />
     </LinearLayout>
-
-
 </RelativeLayout>
