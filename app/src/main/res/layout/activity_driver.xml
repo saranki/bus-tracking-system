@@ -1,49 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:layout_marginTop="@android:dimen/app_icon_size"
-    android:layout_marginBottom="@android:dimen/app_icon_size"
+    android:orientation="vertical"
     tools:context=".ui.DriverActivity">
 
-    <LinearLayout
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:orientation="vertical"
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Driver Login" />
+
+    <EditText
+        android:id="@+id/edtBusNo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:hint="Enter Bus No"
+        android:inputType="text" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Driver Login"
-            android:layout_gravity="center_horizontal"/>
+    <EditText
+        android:id="@+id/edtPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:hint="Enter password"
+        android:inputType="textPassword" />
 
-        <EditText
-            android:layout_margin="15dp"
-            android:hint="Enter Bus No"
-            android:id="@+id/edtBusNo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:text="LOGIN" />
 
-        <EditText
-            android:layout_margin="15dp"
-            android:hint="Enter password"
-            android:id="@+id/edtPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <Button
-            android:layout_margin="15dp"
-            android:id="@+id/btnLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="LOGIN" />
-
-    </LinearLayout>
-
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
