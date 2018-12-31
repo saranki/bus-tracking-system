@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
@@ -44,6 +45,7 @@ public class SchedulerActivity extends AppCompatActivity implements LocationList
     private LocationManager locationManager;
     private double latitude;
     private double longitude;
+    private String busNumberForIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +82,7 @@ public class SchedulerActivity extends AppCompatActivity implements LocationList
             @Override
             public void onClick(View view) {
                 Intent mapIntent = new Intent(SchedulerActivity.this, MapsActivity.class);
+                mapIntent.putExtra("bus_no", busNumberForIntent);
                 startActivity(mapIntent);
             }
         });
@@ -148,12 +151,17 @@ public class SchedulerActivity extends AppCompatActivity implements LocationList
                 for (DataSnapshot scheduler : dataSnapshot.getChildren()) {
                     routeName = scheduler.child("route").getValue().toString();
                     busNumber = scheduler.child("busNo").getValue().toString();
+                    Log.d("AAA", busNumber);
+                    busNumberForIntent = busNumber;
                     time = scheduler.child("startTime").getValue().toString();
 
                     if (((routeName.split("-")[0].equals(endPoint)) || (routeName.split("-")[0].equals(startPoint)))
                             && ((routeName.split("-")[1].equals(endPoint)) || (routeName.split("-")[1].equals(startPoint)))) {
                         busNo.setText(busNumber);
                         startTime.setText(time);
+                    } else {
+                        Toast.makeText(SchedulerActivity.this, "NOOOOO", Toast.LENGTH_SHORT)
+                                .show();
                     }
                     Log.d(TAG, "First----------> " + routeName.split("-")[0]);
                     Log.d(TAG, "Second----------> " + routeName.split("-")[1]);

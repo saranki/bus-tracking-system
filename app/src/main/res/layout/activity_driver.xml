@@ -6,34 +6,38 @@
     android:orientation="vertical"
     tools:context=".ui.DriverActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Driver Login" />
-
     <EditText
         android:id="@+id/edtBusNo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:hint="Enter Bus No"
-        android:inputType="text" />
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="100dp"
+        android:hint="Enter Route Number"
+        android:inputType="text"
+        android:padding="10dp" />
 
     <EditText
         android:id="@+id/edtPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:hint="Enter password"
-        android:inputType="textPassword" />
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:hint="Enter Password"
+        android:inputType="textPassword"
+        android:padding="10dp" />
 
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:text="LOGIN" />
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="50dp"
+        android:paddingBottom="30dp"
+        android:paddingTop="30dp"
+        android:text="LOGIN"
+        android:textSize="18sp" />
 
 </LinearLayout>
