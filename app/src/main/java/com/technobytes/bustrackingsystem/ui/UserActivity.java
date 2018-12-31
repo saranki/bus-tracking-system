@@ -25,6 +25,7 @@ public class UserActivity extends AppCompatActivity implements AdapterView
         Spinner spinner=findViewById(R.id.spinner1);
         ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(this,R.array.districts,android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 

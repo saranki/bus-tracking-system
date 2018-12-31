@@ -90,6 +90,4 @@
             android:text="Check bus location in map view"
             android:layout_gravity="center_horizontal"/>
     </LinearLayout>
-
-
 </RelativeLayout>
