@@ -6,4 +6,5 @@
     <string name="firebase_email" translatable="false">test@example.com</string>
     <string name="firebase_password" translatable="false">password</string>
     <string name="title_activity_maps">Map</string>
+    <string name="select_button_text">Select Your Usage:</string>
 </resources>
