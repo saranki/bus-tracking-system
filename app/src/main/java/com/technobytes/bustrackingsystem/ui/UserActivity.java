@@ -12,8 +12,7 @@ import android.widget.Toast;
 
 import com.technobytes.bustrackingsystem.R;
 
-public class UserActivity extends AppCompatActivity implements AdapterView
-        .OnItemSelectedListener, View.OnClickListener {
+public class UserActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     Button button;
 
@@ -22,8 +21,8 @@ public class UserActivity extends AppCompatActivity implements AdapterView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
 
-        Spinner spinner=findViewById(R.id.spinner1);
-        ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(this,R.array.districts,android.R.layout.simple_spinner_item);
+        Spinner spinner = findViewById(R.id.spinner1);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.districts, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner.setAdapter(adapter);
@@ -35,19 +34,17 @@ public class UserActivity extends AppCompatActivity implements AdapterView
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-        final String selectedDestination=adapterView.getItemAtPosition(position).toString();
-        Toast.makeText(adapterView.getContext(),selectedDestination,Toast.LENGTH_SHORT).show();
+        final String selectedDestination = adapterView.getItemAtPosition(position).toString();
+        Toast.makeText(adapterView.getContext(), selectedDestination, Toast.LENGTH_SHORT).show();
 
-        if(!selectedDestination.equals(null)){
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(UserActivity.this, SchedulerActivity.class);
-                    intent.putExtra("destination", selectedDestination);
-                    startActivity(intent);
-                }
-            });
-        }
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UserActivity.this, SchedulerActivity.class);
+                intent.putExtra("destination", selectedDestination);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -57,8 +54,6 @@ public class UserActivity extends AppCompatActivity implements AdapterView
 
     @Override
     public void onClick(View view) {
-        // Toast.makeText(UserActivity.this, "clicked search", Toast.LENGTH_SHORT).show();
-//        Intent intent = new Intent(UserActivity.this, MapsActivity.class);
         Intent intent = new Intent(UserActivity.this, SchedulerActivity.class);
         startActivity(intent);
     }

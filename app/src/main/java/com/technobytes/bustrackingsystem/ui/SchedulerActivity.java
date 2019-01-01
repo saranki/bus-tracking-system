@@ -68,6 +68,7 @@ public class SchedulerActivity extends AppCompatActivity implements LocationList
             Log.d(TAG, "ACCESS_FINE_LOCATION permission granted...");
             return;
         }
+
         Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         onLocationChanged(location);
         String curLocation = findLocationName(location);
@@ -75,9 +76,9 @@ public class SchedulerActivity extends AppCompatActivity implements LocationList
         Intent intent = getIntent();
         retDestination = intent.getStringExtra("destination");
         destination.setText(retDestination);
-        Log.d(TAG, "Destination: " + retDestination);
 
         checkBusSchedule(curLocation, retDestination);
+
         map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,8 +93,6 @@ public class SchedulerActivity extends AppCompatActivity implements LocationList
     public void onLocationChanged(Location location) {
         latitude = location.getLatitude();
         longitude = location.getLongitude();
-        Log.d(TAG, "Lat: " + Double.toString(latitude));
-        Log.d(TAG, "Long: " + Double.toString(longitude));
     }
 
     @Override
@@ -118,7 +117,6 @@ public class SchedulerActivity extends AppCompatActivity implements LocationList
             List<Address> addresses = null;
             addresses = geocoder.getFromLocation(latitude, longitude, 1);
             city = addresses.get(0).getLocality();
-            Log.d(TAG, "City name: " + city);
             currentLocation.setText(city);
         } catch (IOException e) {
             e.printStackTrace();
@@ -151,22 +149,16 @@ public class SchedulerActivity extends AppCompatActivity implements LocationList
                 for (DataSnapshot scheduler : dataSnapshot.getChildren()) {
                     routeName = scheduler.child("route").getValue().toString();
                     busNumber = scheduler.child("busNo").getValue().toString();
-                    Log.d("AAA", busNumber);
-                    busNumberForIntent = busNumber;
                     time = scheduler.child("startTime").getValue().toString();
+                    busNumberForIntent = busNumber;
 
                     if (((routeName.split("-")[0].equals(endPoint)) || (routeName.split("-")[0].equals(startPoint)))
                             && ((routeName.split("-")[1].equals(endPoint)) || (routeName.split("-")[1].equals(startPoint)))) {
                         busNo.setText(busNumber);
                         startTime.setText(time);
                     } else {
-                        Toast.makeText(SchedulerActivity.this, "NOOOOO", Toast.LENGTH_SHORT)
-                                .show();
+                        Toast.makeText(SchedulerActivity.this, "Data Retrieval Failed...", Toast.LENGTH_LONG).show();
                     }
-                    Log.d(TAG, "First----------> " + routeName.split("-")[0]);
-                    Log.d(TAG, "Second----------> " + routeName.split("-")[1]);
-                    Log.d(TAG, "Firebase route---------> " + scheduler.child("route").getValue());
-                    Log.d(TAG, "Firebase bus no---------> " + busNumber);
                 }
             }
 
