@@ -151,7 +151,9 @@ public class SchedulerActivity extends AppCompatActivity implements LocationList
                 for (DataSnapshot scheduler : dataSnapshot.getChildren()) {
                     routeName = scheduler.child("route").getValue().toString();
                     busNumber = scheduler.child("busNo").getValue().toString();
-                    Log.d("AAA", busNumber);
+                    Log.d("Bus No: ", busNumber);
+                    Log.d(TAG, "Destination... "+retDestination);
+                    Log.d(TAG,"Route... "+routeName);
                     busNumberForIntent = busNumber;
                     time = scheduler.child("startTime").getValue().toString();
 
@@ -159,14 +161,15 @@ public class SchedulerActivity extends AppCompatActivity implements LocationList
                             && ((routeName.split("-")[1].equals(endPoint)) || (routeName.split("-")[1].equals(startPoint)))) {
                         busNo.setText(busNumber);
                         startTime.setText(time);
+                        break;
+                    } else if (startPoint.equals(endPoint)) {
+                        Toast.makeText(SchedulerActivity.this, "Your destination is same as your current location.", Toast.LENGTH_SHORT)
+                                .show();
+                        break;
                     } else {
-                        Toast.makeText(SchedulerActivity.this, "NOOOOO", Toast.LENGTH_SHORT)
+                        Toast.makeText(SchedulerActivity.this, "Unable to find the requested information.", Toast.LENGTH_SHORT)
                                 .show();
                     }
-                    Log.d(TAG, "First----------> " + routeName.split("-")[0]);
-                    Log.d(TAG, "Second----------> " + routeName.split("-")[1]);
-                    Log.d(TAG, "Firebase route---------> " + scheduler.child("route").getValue());
-                    Log.d(TAG, "Firebase bus no---------> " + busNumber);
                 }
             }
 
