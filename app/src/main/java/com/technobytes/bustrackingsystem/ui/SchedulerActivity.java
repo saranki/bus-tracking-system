@@ -153,7 +153,6 @@ public class SchedulerActivity extends AppCompatActivity implements LocationList
                     Log.d("Bus No: ", busNumber);
                     Log.d(TAG, "Destination... "+retDestination);
                     Log.d(TAG,"Route... "+routeName);
-                    busNumberForIntent = busNumber;
 
                     time = scheduler.child("startTime").getValue().toString();
                     busNumberForIntent = busNumber;
@@ -164,14 +163,10 @@ public class SchedulerActivity extends AppCompatActivity implements LocationList
                         startTime.setText(time);
                         break;
                     } else if (startPoint.equals(endPoint)) {
-                        Toast.makeText(SchedulerActivity.this, "Your destination is same as your current location.", Toast.LENGTH_SHORT)
-                                .show();
+                        Toast.makeText(SchedulerActivity.this, "Your destination is same as your current location.", Toast.LENGTH_SHORT).show();
                         break;
                     } else {
-
                         Toast.makeText(SchedulerActivity.this, "Unable to find the requested information.", Toast.LENGTH_SHORT).show();
-                        Toast.makeText(SchedulerActivity.this, "Data Retrieval Failed...", Toast.LENGTH_LONG).show();
-
                     }
                 }
             }
