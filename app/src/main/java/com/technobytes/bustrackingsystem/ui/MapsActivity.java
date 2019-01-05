@@ -69,12 +69,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void setMarker(DataSnapshot dataSnapshot) {
-<<<<<<< HEAD
 
         Log.d("Datasnapshot...", dataSnapshot.toString());
 
-=======
->>>>>>> 2d3fa394127512417111d6cbceb5584cf4ddd7f9
         String key = dataSnapshot.getKey();
         HashMap<String, Object> value = (HashMap<String, Object>) dataSnapshot.getValue();
 

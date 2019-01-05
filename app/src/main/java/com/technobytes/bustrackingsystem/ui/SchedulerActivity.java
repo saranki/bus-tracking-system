@@ -149,13 +149,12 @@ public class SchedulerActivity extends AppCompatActivity implements LocationList
                 for (DataSnapshot scheduler : dataSnapshot.getChildren()) {
                     routeName = scheduler.child("route").getValue().toString();
                     busNumber = scheduler.child("busNo").getValue().toString();
-<<<<<<< HEAD
+
                     Log.d("Bus No: ", busNumber);
                     Log.d(TAG, "Destination... "+retDestination);
                     Log.d(TAG,"Route... "+routeName);
                     busNumberForIntent = busNumber;
-=======
->>>>>>> 2d3fa394127512417111d6cbceb5584cf4ddd7f9
+
                     time = scheduler.child("startTime").getValue().toString();
                     busNumberForIntent = busNumber;
 
@@ -169,12 +168,12 @@ public class SchedulerActivity extends AppCompatActivity implements LocationList
                                 .show();
                         break;
                     } else {
-<<<<<<< HEAD
+
                         Toast.makeText(SchedulerActivity.this, "Unable to find the requested information.", Toast.LENGTH_SHORT)
                                 .show();
-=======
+
                         Toast.makeText(SchedulerActivity.this, "Data Retrieval Failed...", Toast.LENGTH_LONG).show();
->>>>>>> 2d3fa394127512417111d6cbceb5584cf4ddd7f9
+
                     }
                 }
             }
