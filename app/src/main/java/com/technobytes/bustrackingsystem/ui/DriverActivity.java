@@ -42,30 +42,46 @@ public class DriverActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loginDriver(edtBusNo.getText().toString(), edtPassword.getText().toString());
+                String txtBusNo = edtBusNo.getText().toString();
+                String txtPassword = edtPassword.getText().toString();
+
+                if (isValid(txtBusNo, txtPassword)) {
+                    loginDriver(txtBusNo, txtPassword);
+                }
             }
         });
+    }
+
+    private boolean isValid(String txtBusNo, String txtPassword) {
+        if (txtBusNo.equalsIgnoreCase("")) {
+            Toast.makeText(getApplicationContext(), "Please Enter Bus Number...", Toast.LENGTH_LONG).show();
+            return false;
+        } else if (txtPassword.equalsIgnoreCase("")) {
+            Toast.makeText(getApplicationContext(), "Please Enter Password...", Toast.LENGTH_LONG).show();
+            return false;
+        } else {
+            return true;
+        }
     }
 
     private void loginDriver(final String busNo, final String password) {
         ValueEventListener driverInfoListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Driver driver = new Driver(busNo, password);
-                Driver firebaseDriver = dataSnapshot.getValue(Driver.class);
+                if (dataSnapshot.exists()) {
+                    Driver driver = new Driver(busNo, password);
+                    Driver firebaseDriver = dataSnapshot.getValue(Driver.class);
 
-                Log.i(TAG, "Passed Driver Object -> " + driver.toString());
-                Log.i(TAG, "Firebase Driver Object -> " + firebaseDriver.toString());
-
-                if (driver.getBusNo().equals(firebaseDriver.getBusNo()) && driver.getPassword().equals
-                        (firebaseDriver.getPassword())) {
-                    Toast.makeText(DriverActivity.this, "Driver Logged In...", Toast.LENGTH_LONG)
-                            .show();
-                    Intent intent = new Intent(DriverActivity.this, DriverInfoActivity.class);
-                    intent.putExtra("bus_no", busNo);
-                    startActivity(intent);
+                    if (driver.getBusNo().equals(firebaseDriver.getBusNo()) && driver.getPassword().equals(firebaseDriver.getPassword())) {
+                        Toast.makeText(DriverActivity.this, "Driver Logged In...", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(DriverActivity.this, DriverInfoActivity.class);
+                        intent.putExtra("bus_no", busNo);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(DriverActivity.this, "Authentication Failed...", Toast.LENGTH_LONG).show();
+                    }
                 } else {
-                    Log.i(TAG, "Authentication Failed...");
+                    Toast.makeText(DriverActivity.this, "Bus Route Does Not Exist...", Toast.LENGTH_LONG).show();
                 }
             }
 

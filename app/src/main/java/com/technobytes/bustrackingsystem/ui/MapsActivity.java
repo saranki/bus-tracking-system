@@ -14,7 +14,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,7 +40,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        if (mapFragment != null) {
+            mapFragment.getMapAsync(this);
+        }
     }
 
     @Override
@@ -52,8 +53,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void subscribeToUpdates() {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("locations" + "/" + busNo); //
-        // "/" + busNo
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("locations" + "/" + busNo);
 
         ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -66,54 +66,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             }
         });
-
-//        ref.addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
-//
-//                for(DataSnapshot bus : dataSnapshot.getChildren()){
-//                    if (bus.)
-//                }
-//
-//                Log.d("AAA", dataSnapshot.toString());
-//
-//                setMarker(dataSnapshot);
-//            }
-//
-//            @Override
-//            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
-//                setMarker(dataSnapshot);
-//            }
-//
-//            @Override
-//            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
-//            }
-//
-//            @Override
-//            public void onChildRemoved(DataSnapshot dataSnapshot) {
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError error) {
-//                Log.d(TAG, "Failed to read value.", error.toException());
-//            }
-//        });
     }
 
     private void setMarker(DataSnapshot dataSnapshot) {
+<<<<<<< HEAD
 
         Log.d("Datasnapshot...", dataSnapshot.toString());
 
+=======
+>>>>>>> 2d3fa394127512417111d6cbceb5584cf4ddd7f9
         String key = dataSnapshot.getKey();
         HashMap<String, Object> value = (HashMap<String, Object>) dataSnapshot.getValue();
+
         double lat = Double.parseDouble(value.get("latitude").toString());
         double lng = Double.parseDouble(value.get("longitude").toString());
         LatLng location = new LatLng(lat, lng);
+
         if (!mMarkers.containsKey(key)) {
             mMarkers.put(key, mMap.addMarker(new MarkerOptions().title(key).position(location)));
         } else {
             mMarkers.get(key).setPosition(location);
         }
+
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
         for (Marker marker : mMarkers.values()) {
             builder.include(marker.getPosition());

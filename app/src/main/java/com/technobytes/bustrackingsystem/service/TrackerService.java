@@ -44,7 +44,6 @@ public class TrackerService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        //return super.onStartCommand(intent, flags, startId);
         busNo = intent.getExtras().getString("bus_no", "bus_no_here_at_two");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
@@ -60,6 +59,7 @@ public class TrackerService extends Service {
         String NOTIFICATION_CHANNEL_ID = "com.technobytes.bustrackingsystem";
         String channelName = "My Background Service";
         NotificationChannel chan = null;
+
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             chan = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_NONE);
             chan.setLightColor(Color.BLUE);
@@ -112,6 +112,7 @@ public class TrackerService extends Service {
         FusedLocationProviderClient client = LocationServices.getFusedLocationProviderClient(this);
         final String path = getString(R.string.firebase_path) + "/" + busNo;
         int permission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+
         if (permission == PackageManager.PERMISSION_GRANTED) {
             // Request location updates and when an update is received, store the location in Firebase
             client.requestLocationUpdates(request, new LocationCallback() {
