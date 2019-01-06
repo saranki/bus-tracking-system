@@ -149,14 +149,13 @@ public class SchedulerActivity extends AppCompatActivity implements LocationList
                 for (DataSnapshot scheduler : dataSnapshot.getChildren()) {
                     routeName = scheduler.child("route").getValue().toString();
                     busNumber = scheduler.child("busNo").getValue().toString();
-
-                    Log.d("Bus No: ", busNumber);
-                    Log.d(TAG, "Destination... "+retDestination);
-                    Log.d(TAG,"Route... "+routeName);
-                    busNumberForIntent = busNumber;
-
                     time = scheduler.child("startTime").getValue().toString();
+
                     busNumberForIntent = busNumber;
+
+                    Log.d("Bus No: F, A -> ", busNumber);
+                    Log.d(TAG, "Destination: F, A -> " + retDestination + ", " + endPoint);
+                    Log.d(TAG, "Route: F, A -> " + routeName + ", " + startPoint);
 
                     if (((routeName.split("-")[0].equals(endPoint)) || (routeName.split("-")[0].equals(startPoint)))
                             && ((routeName.split("-")[1].equals(endPoint)) || (routeName.split("-")[1].equals(startPoint)))) {
@@ -164,16 +163,10 @@ public class SchedulerActivity extends AppCompatActivity implements LocationList
                         startTime.setText(time);
                         break;
                     } else if (startPoint.equals(endPoint)) {
-                        Toast.makeText(SchedulerActivity.this, "Your destination is same as your current location.", Toast.LENGTH_SHORT)
-                                .show();
+                        Toast.makeText(SchedulerActivity.this, "Your destination is same as your current location.", Toast.LENGTH_SHORT).show();
                         break;
                     } else {
-
-                        Toast.makeText(SchedulerActivity.this, "Unable to find the requested information.", Toast.LENGTH_SHORT)
-                                .show();
-
-                        Toast.makeText(SchedulerActivity.this, "Data Retrieval Failed...", Toast.LENGTH_LONG).show();
-
+                        Toast.makeText(SchedulerActivity.this, "Unable to find the requested information.", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
